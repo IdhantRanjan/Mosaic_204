@@ -69,30 +69,73 @@ h1,h2,h3,h4{letter-spacing:-0.02em;font-weight:700;line-height:1.2}
   height:var(--nav-h);
   border-radius:100px;
   z-index:100;
-  transition:background 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  transition:background 0.3s var(--ease), box-shadow 0.3s var(--ease);
 
-  /* Strong glassmorphism on dark hero */
-  background:rgba(5,8,24,0.62);
-  backdrop-filter:blur(40px) saturate(200%);
-  -webkit-backdrop-filter:blur(40px) saturate(200%);
-  border:1px solid rgba(255,255,255,0.16);
+  /* Premium glassmorphism on dark hero — layered tint + blur */
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 55%, rgba(255,255,255,0.06) 100%),
+    rgba(10,14,32,0.50);
+  backdrop-filter:blur(28px) saturate(190%) brightness(1.08);
+  -webkit-backdrop-filter:blur(28px) saturate(190%) brightness(1.08);
+  border:none;
   box-shadow:
-    0 8px 32px rgba(0,0,0,0.38),
-    0 2px 8px rgba(0,0,0,0.22),
-    inset 0 1px 0 rgba(255,255,255,0.10),
-    inset 0 -1px 0 rgba(0,0,0,0.15);
+    0 16px 48px rgba(0,0,0,0.50),
+    0 4px 14px rgba(0,0,0,0.30),
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    inset 0 -1px 1px rgba(255,255,255,0.04);
+}
+/* Glass rim light — gradient border ring */
+.nav::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  padding:1px;
+  background:linear-gradient(135deg,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,255,255,0.08) 32%,
+    rgba(255,255,255,0) 55%,
+    rgba(255,255,255,0.10) 80%,
+    rgba(255,255,255,0.30) 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+          mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask-composite:exclude;
+  pointer-events:none;
+  transition:opacity 0.3s var(--ease);
+}
+/* Soft top sheen highlight */
+.nav::after{
+  content:'';
+  position:absolute;
+  top:1px;left:18px;right:18px;
+  height:45%;
+  border-radius:100px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0) 100%);
+  pointer-events:none;
+  opacity:0.7;
+  transition:opacity 0.3s var(--ease);
 }
 .nav.scrolled,.nav.solid{
-  background:rgba(255,255,255,0.92);
-  backdrop-filter:blur(40px) saturate(180%);
-  -webkit-backdrop-filter:blur(40px) saturate(180%);
-  border:1px solid rgba(0,0,0,0.07);
-  box-shadow:0 4px 24px rgba(0,0,0,0.10),0 1px 4px rgba(0,0,0,0.06);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.55)),
+    rgba(255,255,255,0.70);
+  backdrop-filter:blur(32px) saturate(180%);
+  -webkit-backdrop-filter:blur(32px) saturate(180%);
+  box-shadow:
+    0 6px 28px rgba(15,23,42,0.12),
+    0 1px 4px rgba(15,23,42,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.9);
 }
+.nav.scrolled::before,.nav.solid::before{
+  background:linear-gradient(135deg, rgba(0,0,0,0.10), rgba(0,0,0,0.02) 50%, rgba(0,0,0,0.06));
+}
+.nav.scrolled::after,.nav.solid::after{opacity:0}
 
 /* Nav container — logo left, links center, CTA right */
 .nav-container{
   position:relative;
+  z-index:2;
   height:100%;
   padding:0 20px;
   display:flex;
@@ -100,26 +143,26 @@ h1,h2,h3,h4{letter-spacing:-0.02em;font-weight:700;line-height:1.2}
   justify-content:center;
 }
 
-/* Logo — uses crop technique for 500×500 PNG */
+/* Logo — crop technique for 500×500 PNG (content box 229×71 at offset 134,212) */
 .nav-logo{
   position:absolute;
-  left:16px;
+  left:18px;
   display:flex;
   align-items:center;
   flex-shrink:0;
 }
 .nav-logo-crop{
-  width:115px;
-  height:36px;
+  width:100px;   /* 229 * 0.4367 — a little smaller */
+  height:31px;   /* 71 * 0.4367 */
   overflow:hidden;
   position:relative;
 }
 .nav-logo-img{
   position:absolute;
-  width:251px;   /* 500 * 0.502 — scales full PNG to show content at nav height */
-  height:251px;
-  left:-67px;    /* -134 * 0.502 — aligns content left edge to container */
-  top:-107px;    /* -212 * 0.502 — aligns content top edge to container */
+  width:218px;   /* 500 * 0.4367 */
+  height:218px;
+  left:-59px;    /* -134 * 0.4367 */
+  top:-93px;     /* -212 * 0.4367 */
   filter:brightness(0) invert(1);
   transition:filter 0.25s var(--ease);
 }
@@ -174,7 +217,7 @@ h1,h2,h3,h4{letter-spacing:-0.02em;font-weight:700;line-height:1.2}
   justify-content:center;
   position:relative;
   overflow:hidden;
-  padding:0 24px 170px; /* bottom space for ticker + wave */
+  padding:0 24px 120px; /* bottom space for wave */
 }
 .hero::before{
   content:'';position:absolute;inset:0;
@@ -235,45 +278,6 @@ h1,h2,h3,h4{letter-spacing:-0.02em;font-weight:700;line-height:1.2}
 }
 .btn-hero-ghost:hover{border-color:rgba(255,255,255,0.4);color:rgba(255,255,255,0.92)}
 
-/* Hero logo ticker — absolute near bottom of hero */
-.hero-ticker-area{
-  position:absolute;
-  bottom:108px; /* above the wave */
-  left:0;right:0;
-  overflow:hidden;
-  padding:16px 0;
-  /* subtle top border */
-  border-top:1px solid rgba(255,255,255,0.06);
-}
-.hero-ticker-track{
-  display:flex;
-  align-items:center;
-  width:max-content;
-  animation:hero-marquee 20s linear infinite;
-}
-.hero-ticker-track:hover{animation-play-state:paused}
-
-/* Each item has margin-right = gap. Last item of each group also has same margin,
-   creating equal spacing including at the loop point. */
-.hero-ticker-item{
-  flex-shrink:0;
-  margin-right:72px;
-  display:flex;align-items:center;justify-content:center;
-}
-.hero-ticker-item img{
-  height:44px;width:auto;
-  filter:brightness(0) invert(1);
-  opacity:0.52;
-  transition:opacity 0.2s;
-}
-.hero-ticker-item:hover img{opacity:0.85}
-.hero-ticker-wide img{height:34px}
-
-@keyframes hero-marquee{
-  0%  { transform:translateX(0); }
-  100%{ transform:translateX(-50%); }
-}
-
 /* Hero wave */
 .hero-wave{
   position:absolute;bottom:-2px;left:0;right:0;
@@ -290,6 +294,51 @@ h1,h2,h3,h4{letter-spacing:-0.02em;font-weight:700;line-height:1.2}
 .stat-num{font-size:2.25rem;font-weight:800;color:var(--navy);letter-spacing:-0.04em;line-height:1}
 .stat-lbl{font-size:0.8125rem;font-weight:500;color:var(--ink-3)}
 .stat-sep{width:1px;height:44px;background:var(--border);flex-shrink:0}
+
+/* ─────────────────────────────────────────────
+   SCHOOLS MARQUEE BAND — seamless infinite scroll
+───────────────────────────────────────────── */
+.schools-band{
+  background:var(--surface);
+  padding:52px 0 56px;
+  border-bottom:1px solid var(--border);
+  overflow:hidden;
+}
+.schools-band-label{
+  display:block;text-align:center;
+  font-size:0.75rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.14em;
+  color:var(--ink-4);margin-bottom:38px;
+}
+.marquee{
+  display:flex;
+  width:100%;
+  overflow:hidden;
+  /* fade edges for a premium look */
+  -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image:linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+.marquee-set{
+  display:flex;
+  align-items:center;
+  gap:64px;
+  flex-shrink:0;
+  min-width:100%;            /* a set always spans >= viewport, so translateX(-100%) is seamless */
+  justify-content:space-around;
+  animation:marquee 32s linear infinite;
+}
+.marquee:hover .marquee-set{animation-play-state:paused}
+.marquee-item{flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.marquee-item img{
+  height:50px;width:auto;object-fit:contain;
+  opacity:0.82;filter:grayscale(12%);
+  transition:opacity 0.2s, filter 0.2s, transform 0.2s;
+}
+.marquee-item:hover img{opacity:1;filter:none;transform:scale(1.05)}
+@keyframes marquee{
+  from{transform:translateX(0)}
+  to  {transform:translateX(-100%)}
+}
 
 /* ─────────────────────────────────────────────
    SECTION SHARED
@@ -442,6 +491,8 @@ h1,h2,h3,h4{letter-spacing:-0.02em;font-weight:700;line-height:1.2}
 
 .about-dev-card{display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:start;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:36px}
 .about-dev-photo-wrap{}
+.about-dev-photo{width:170px;height:210px;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);box-shadow:var(--sh-sm)}
+.about-dev-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
 .about-dev-photo-placeholder{width:160px;height:200px;border-radius:var(--r-lg);background:linear-gradient(135deg,#F3F4F6,#E5E7EB);border:2px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--ink-4)}
 .about-dev-photo-placeholder i{font-size:2.5rem}
 .about-dev-photo-placeholder span{font-size:0.75rem;font-weight:500;text-align:center}

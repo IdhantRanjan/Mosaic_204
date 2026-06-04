@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initListeners();
   initNavScroll();
   initHeroTypewriter();
+  initSchoolMarquee();
   initMissionCycler();
   initUpcoming();
   updateSavedBadge();
@@ -283,6 +284,35 @@ function initHeroTypewriter() {
 
   // Hold first word for 2s, then start cycling
   setTimeout(type, 2000);
+}
+
+// ═══════════════════════════════════════════
+// SCHOOL LOGO MARQUEE — seamless infinite scroll
+// ═══════════════════════════════════════════
+function initSchoolMarquee() {
+  const el = document.getElementById('school-marquee');
+  if (!el) return;
+
+  const logos = [
+    { src:'nv-logo.png',        alt:'Neuqua Valley' },
+    { src:'ipsd-logo.png',      alt:'IPSD 204' },
+    { src:'metea-logo.png',     alt:'Metea Valley' },
+    { src:'waubonsie-logo.png', alt:'Waubonsie Valley' },
+  ];
+
+  // Repeat the set enough times that one group comfortably fills wide screens
+  const REPEATS = 3;
+  let items = '';
+  for (let r = 0; r < REPEATS; r++) {
+    logos.forEach(l => {
+      items += `<div class="marquee-item"><img src="${l.src}" alt="${l.alt}"></div>`;
+    });
+  }
+
+  // Two identical sets — translateX(-100%) loops seamlessly with no gap
+  el.innerHTML =
+    `<div class="marquee-set">${items}</div>` +
+    `<div class="marquee-set" aria-hidden="true">${items}</div>`;
 }
 
 // ═══════════════════════════════════════════
