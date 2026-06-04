@@ -1,15 +1,18 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "installCommand": null,
+  "framework": null,
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/server.js"
-    }
+    { "src": "/styles.css",       "dest": "/styles.css" },
+    { "src": "/app.js",           "dest": "/app.js" },
+    { "src": "/data.js",          "dest": "/data.js" },
+    { "src": "/mosaic-logo.png",  "dest": "/mosaic-logo.png" },
+    { "src": "/nv-logo.png",      "dest": "/nv-logo.png" },
+    { "src": "/metea-logo.png",   "dest": "/metea-logo.png" },
+    { "src": "/waubonsie-logo.png","dest": "/waubonsie-logo.png" },
+    { "src": "/ipsd-logo.png",    "dest": "/ipsd-logo.png" },
+    { "src": "/(.*)",             "dest": "/index.html" }
   ]
 }
