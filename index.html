@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mosaic — IPSD 204</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ═══ FLOATING PILL NAVIGATION ═══ -->
+  <nav id="main-nav" class="nav">
+    <div class="nav-container">
+
+      <a class="nav-logo" href="#" onclick="showHome(); return false;">
+        <div class="nav-logo-crop">
+          <img src="mosaic-logo.png" alt="Mosaic" class="nav-logo-img">
+        </div>
+      </a>
+
+      <div class="nav-links" id="nav-links">
+        <button class="nav-link" onclick="showScreen('about')">About</button>
+        <button class="nav-link" onclick="showScreen('browse')">Explore Clubs</button>
+        <button class="nav-link" onclick="showScreen('calendar-page')">Calendar</button>
+        <button class="nav-link" onclick="scrollToSection('mission')">Discover</button>
+        <button class="nav-link nav-link-dashboard hidden" id="nav-dashboard" onclick="showScreen('dashboard')">Dashboard</button>
+      </div>
+
+      <div class="nav-right">
+        <button class="nav-cta" id="nav-cta" onclick="startQuiz()">Get Started <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <div id="app">
+
+    <!-- ═══════════════════════════════════════
+         HOME / LANDING SCREEN
+    ═══════════════════════════════════════ -->
+    <div id="home" class="screen active">
+
+      <!-- Hero -->
+      <section class="hero" id="hero">
+        <div class="hero-geo geo-a"></div>
+        <div class="hero-geo geo-b"></div>
+        <div class="hero-geo geo-c"></div>
+
+        <div class="hero-content">
+          <h1 class="hero-h1">
+            Helping students<br>find their <em class="hero-em" id="hero-typewriter">light.</em>
+          </h1>
+          <p class="hero-sub">
+            The one-stop platform for discovering clubs, events, and opportunities across IPSD 204.
+          </p>
+          <div class="hero-ctas">
+            <button class="btn-hero-primary" onclick="startQuiz()">Get Started <i class="fas fa-arrow-right"></i></button>
+            <button class="btn-hero-ghost" onclick="showScreen('browse')">Explore Clubs</button>
+          </div>
+        </div>
+
+        <!-- Logo ticker inside hero (replaces school pills) -->
+        <div class="hero-ticker-area">
+          <div class="hero-ticker-track" id="hero-ticker">
+            <!-- Group 1 -->
+            <div class="hero-ticker-item"><img src="nv-logo.png" alt="Neuqua Valley"></div>
+            <div class="hero-ticker-item hero-ticker-wide"><img src="ipsd-logo.png" alt="IPSD 204"></div>
+            <div class="hero-ticker-item"><img src="metea-logo.png" alt="Metea Valley"></div>
+            <div class="hero-ticker-item"><img src="waubonsie-logo.png" alt="Waubonsie Valley"></div>
+            <!-- Group 2 (exact duplicate for seamless loop) -->
+            <div class="hero-ticker-item"><img src="nv-logo.png" alt="Neuqua Valley"></div>
+            <div class="hero-ticker-item hero-ticker-wide"><img src="ipsd-logo.png" alt="IPSD 204"></div>
+            <div class="hero-ticker-item"><img src="metea-logo.png" alt="Metea Valley"></div>
+            <div class="hero-ticker-item"><img src="waubonsie-logo.png" alt="Waubonsie Valley"></div>
+          </div>
+        </div>
+
+        <!-- Squiggly wave -->
+        <div class="hero-wave">
+          <svg viewBox="0 0 1440 110" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,55 C120,90 240,20 360,55 C480,90 600,15 720,50 C840,85 960,18 1080,48 C1170,68 1290,30 1440,60 L1440,110 L0,110 Z" fill="#F9FAFB"/>
+          </svg>
+        </div>
+      </section>
+
+      <!-- Stats bar -->
+      <section class="stats-bar">
+        <div class="container">
+          <div class="stats-inner">
+            <div class="stat-item">
+              <span class="stat-num">500+</span>
+              <span class="stat-lbl">Active Students</span>
+            </div>
+            <div class="stat-sep"></div>
+            <div class="stat-item">
+              <span class="stat-num">110+</span>
+              <span class="stat-lbl">Clubs District-Wide</span>
+            </div>
+            <div class="stat-sep"></div>
+            <div class="stat-item">
+              <span class="stat-num">3</span>
+              <span class="stat-lbl">High Schools</span>
+            </div>
+            <div class="stat-sep"></div>
+            <div class="stat-item">
+              <span class="stat-num">5 min</span>
+              <span class="stat-lbl">To Find Your Match</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Upcoming Opportunities -->
+      <section class="upcoming-section" id="upcoming">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="section-label">Upcoming</span>
+              <h2 class="section-title">Upcoming Opportunities</h2>
+            </div>
+            <button class="link-btn" onclick="showScreen('browse')">View all <i class="fas fa-arrow-right"></i></button>
+          </div>
+          <div class="upcoming-list" id="upcoming-list"></div>
+          <div class="upcoming-footer">
+            <button class="link-btn" onclick="showScreen('browse')">View all opportunities <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our Mission -->
+      <section class="mission-section" id="mission">
+        <div class="container">
+          <div class="mission-layout">
+            <div class="mission-left">
+              <span class="section-label">Our Mission</span>
+              <h2 class="mission-heading">We help<br>students</h2>
+              <div class="mission-words" id="mission-words">
+                <div class="mw active" data-idx="0">
+                  <span class="mw-key">Connect</span><span class="mw-rest"> curiosity to action</span>
+                </div>
+                <div class="mw" data-idx="1">
+                  <span class="mw-key">Explore</span><span class="mw-rest"> interests &amp; passions</span>
+                </div>
+                <div class="mw" data-idx="2">
+                  <span class="mw-key">Serve</span><span class="mw-rest"> their communities</span>
+                </div>
+                <div class="mw" data-idx="3">
+                  <span class="mw-key">Lead</span><span class="mw-rest"> with confidence</span>
+                </div>
+              </div>
+            </div>
+            <div class="mission-right">
+              <p class="mission-body">At Mosaic, we're dedicated to helping students across IPSD 204 discover their passions, engage with their community, and develop leadership skills through meaningful club participation.</p>
+              <button class="btn-outline" onclick="showScreen('about')">Learn about our mission <i class="fas fa-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Student Advisory Board -->
+      <section class="advisory-section" id="advisory">
+        <div class="container">
+          <div class="advisory-layout">
+            <div class="advisory-text">
+              <span class="section-label">The Team Behind It</span>
+              <h2 class="section-title advisory-title">Brought to you by the<br>Student Advisory Board</h2>
+              <p class="advisory-body">Mosaic is student-built and student-driven. Our advisory board — made up of student leaders from across IPSD 204 — designed this platform to make it easier than ever for every student to find where they belong.</p>
+              <div class="advisory-stats">
+                <div class="advisory-stat">
+                  <span class="advisory-stat-num">3</span>
+                  <span class="advisory-stat-lbl">Schools Represented</span>
+                </div>
+                <div class="advisory-stat">
+                  <span class="advisory-stat-num">100%</span>
+                  <span class="advisory-stat-lbl">Student-Led</span>
+                </div>
+              </div>
+              <button class="btn-outline" style="margin-top:28px" onclick="showScreen('about')">Meet the team <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="advisory-photo">
+              <div class="advisory-photo-placeholder">
+                <div class="advisory-photo-inner">
+                  <i class="fas fa-users advisory-photo-icon"></i>
+                  <span class="advisory-photo-label">Group photo coming soon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta-section">
+        <div class="container">
+          <div class="cta-header">
+            <span class="section-label">Get Involved</span>
+            <h2 class="section-title">Ready to find your place?</h2>
+          </div>
+          <div class="cta-grid">
+            <div class="cta-card cta-light">
+              <div class="cta-card-inner">
+                <div class="cta-number">110+</div>
+                <div class="cta-card-content">
+                  <h3>Browse All Clubs</h3>
+                  <p>Explore every club across IPSD 204. Filter by school, category, or interest.</p>
+                </div>
+                <div class="cta-card-footer">
+                  <button class="cta-btn-dark" onclick="showScreen('browse')">Find What Fits You <i class="fas fa-arrow-right"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="cta-card cta-dark">
+              <div class="cta-card-inner">
+                <div class="cta-number cta-number-light">5 min</div>
+                <div class="cta-card-content">
+                  <h3 class="cta-title-light">Take the Quiz</h3>
+                  <p class="cta-desc-light">Answer 5 questions and get personally matched with clubs that align with your interests and goals.</p>
+                </div>
+                <div class="cta-card-footer">
+                  <button class="cta-btn-light" onclick="startQuiz()">Get Matched <i class="fas fa-arrow-right"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-brand">
+              <div class="footer-logo">
+                <div class="footer-logo-crop">
+                  <img src="mosaic-logo.png" alt="Mosaic" class="footer-logo-img">
+                </div>
+              </div>
+              <p>Helping students find their light.</p>
+            </div>
+            <div class="footer-col">
+              <h4>Quick Links</h4>
+              <button class="footer-link" onclick="showScreen('browse')">Explore Clubs</button>
+              <button class="footer-link" onclick="showScreen('about')">About</button>
+              <button class="footer-link" onclick="showScreen('calendar-page')">Calendar</button>
+            </div>
+            <div class="footer-col">
+              <h4>IPSD 204</h4>
+              <p class="footer-info">Naperville, IL 60563</p>
+              <p class="footer-info">mosaic@ipsd204.org</p>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <span>© 2026 Mosaic — IPSD 204. All rights reserved.</span>
+          </div>
+        </div>
+      </footer>
+
+    </div><!-- #home -->
+
+
+    <!-- ═══════════════════════════════════════
+         ABOUT SCREEN
+    ═══════════════════════════════════════ -->
+    <div id="about" class="screen">
+
+      <!-- About Hero Banner -->
+      <div class="about-hero-banner">
+        <div class="container">
+          <button class="back-link" onclick="showHome()"><i class="fas fa-arrow-left"></i> Back</button>
+          <span class="section-label">About Mosaic</span>
+          <h1 class="about-hero-h1">Built by students,<br>for students.</h1>
+          <p class="about-hero-sub">Mosaic is the district-wide club discovery platform for IPSD 204 — designed to make it easy for every student to find where they belong.</p>
+        </div>
+      </div>
+
+      <!-- Mission expanded -->
+      <section class="about-section">
+        <div class="container">
+          <div class="about-mission-grid">
+            <div class="about-mission-text">
+              <span class="section-label">Our Mission</span>
+              <h2 class="section-title">We believe every student deserves to find their place.</h2>
+              <p class="about-body-text">High school is full of opportunities — clubs, activities, competitions, creative outlets, and communities waiting to be discovered. But too often, students don't know where to look or how to connect with what they love. Mosaic changes that.</p>
+              <p class="about-body-text">Our platform makes club discovery personal, simple, and district-wide. Whether you're passionate about robotics, want to join a service organization, or just want to try something new — Mosaic helps you find it in minutes.</p>
+            </div>
+            <div class="about-values-grid">
+              <div class="about-value-card">
+                <div class="about-value-icon">🔗</div>
+                <h4>Connect</h4>
+                <p>Bridge students to clubs and opportunities that match their unique passions and goals.</p>
+              </div>
+              <div class="about-value-card">
+                <div class="about-value-icon">🔍</div>
+                <h4>Explore</h4>
+                <p>Discover new interests across all three IPSD 204 high schools in one place.</p>
+              </div>
+              <div class="about-value-card">
+                <div class="about-value-icon">🌱</div>
+                <h4>Serve</h4>
+                <p>Empower students to contribute meaningfully to their school communities.</p>
+              </div>
+              <div class="about-value-card">
+                <div class="about-value-icon">🏆</div>
+                <h4>Lead</h4>
+                <p>Develop leadership skills through meaningful club engagement and participation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Developer spotlight -->
+      <section class="about-section about-section-alt">
+        <div class="container">
+          <span class="section-label">The Developer</span>
+          <h2 class="section-title" style="margin-bottom:40px">The person who built it.</h2>
+          <div class="about-dev-card">
+            <div class="about-dev-photo-wrap">
+              <div class="about-dev-photo-placeholder">
+                <i class="fas fa-user"></i>
+                <span>Photo coming soon</span>
+              </div>
+            </div>
+            <div class="about-dev-info">
+              <h3 class="about-dev-name">[Your Name]</h3>
+              <p class="about-dev-role">Lead Developer & Designer · IPSD 204 Student</p>
+              <p class="about-dev-bio">Mosaic was designed and built from the ground up as a student-led initiative to improve club discovery across IPSD 204. From the matching algorithm to the interface design, every piece was crafted with students in mind.</p>
+              <p class="about-dev-bio">This is a placeholder — replace with your name, bio, and photo when ready.</p>
+              <div class="about-dev-school-tag">Neuqua Valley High School</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Advisory Board -->
+      <section class="about-section">
+        <div class="container">
+          <span class="section-label">Student Advisory Board</span>
+          <h2 class="section-title">The team behind Mosaic.</h2>
+          <p class="about-board-sub">A group of student leaders from across IPSD 204 helped shape Mosaic's features, content, and direction. Their input made this platform what it is.</p>
+          <div class="about-board-photo-wrap">
+            <div class="about-board-photo-placeholder">
+              <i class="fas fa-users about-board-icon"></i>
+              <div class="about-board-photo-text">
+                <strong>Group Photo</strong>
+                <span>Add your advisory board photo here</span>
+              </div>
+            </div>
+          </div>
+          <div class="about-school-credits">
+            <div class="about-school-credit">
+              <img src="nv-logo.png" alt="Neuqua Valley" class="credit-logo">
+              <span>Neuqua Valley</span>
+            </div>
+            <div class="about-school-credit">
+              <img src="metea-logo.png" alt="Metea Valley" class="credit-logo">
+              <span>Metea Valley</span>
+            </div>
+            <div class="about-school-credit">
+              <img src="waubonsie-logo.png" alt="Waubonsie Valley" class="credit-logo">
+              <span>Waubonsie Valley</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- #about -->
+
+
+    <!-- ═══════════════════════════════════════
+         SURVEY SCREEN
+    ═══════════════════════════════════════ -->
+    <div id="survey" class="screen">
+      <div class="survey-wrapper">
+        <div class="survey-top">
+          <div class="survey-meta">
+            <span id="step-label" class="step-label">Question 1 of 5</span>
+            <div id="step-dots" class="step-dots"></div>
+          </div>
+          <div class="survey-progress-bar">
+            <div id="progress-fill" class="survey-progress-fill"></div>
+          </div>
+        </div>
+        <div class="survey-card">
+          <div class="survey-q-icon" id="question-icon"><i class="fas fa-list"></i></div>
+          <h2 id="question-title"></h2>
+          <p id="question-hint" class="q-hint"></p>
+          <div id="question-options" class="options-grid"></div>
+          <div class="survey-nav">
+            <button id="prev-btn" class="btn-secondary" disabled>
+              <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <button id="next-btn" class="btn-navy" disabled>
+              Continue <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         RESULTS SCREEN
+    ═══════════════════════════════════════ -->
+    <div id="results" class="screen">
+      <div class="container">
+        <div class="results-hero">
+          <div class="results-emoji">🎉</div>
+          <h2>Your Perfect Matches</h2>
+          <p>Based on your interests, here are clubs we think you'll love</p>
+        </div>
+        <div id="matched-clubs" class="clubs-grid"></div>
+        <div class="results-actions">
+          <button id="view-dashboard" class="btn-navy"><i class="fas fa-chart-bar"></i> View My Dashboard</button>
+          <button id="browse-all" class="btn-secondary"><i class="fas fa-compass"></i> Explore All Clubs</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         DASHBOARD SCREEN
+    ═══════════════════════════════════════ -->
+    <div id="dashboard" class="screen">
+      <div class="container">
+        <div class="page-header">
+          <div>
+            <h2>My Dashboard</h2>
+            <p class="page-sub">Your personalized IPSD 204 club recommendations</p>
+          </div>
+        </div>
+        <div class="stats-row" id="dashboard-stats"></div>
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tab-btn-clubs" onclick="switchDashboardTab('clubs')">
+            <i class="fas fa-star"></i> My Clubs
+          </button>
+          <button class="tab-btn" id="tab-btn-saved" onclick="switchDashboardTab('saved')">
+            <i class="fas fa-heart"></i> Saved <span class="tab-badge" id="saved-badge">0</span>
+          </button>
+          <button class="tab-btn" id="tab-btn-calendar" onclick="switchDashboardTab('calendar')">
+            <i class="fas fa-calendar-alt"></i> Calendar
+          </button>
+        </div>
+        <div id="my-clubs-tab" class="tab-panel active">
+          <div id="my-matched-clubs" class="clubs-grid"></div>
+          <div class="dash-actions">
+            <button class="btn-secondary" onclick="retakeSurvey()"><i class="fas fa-redo-alt"></i> Retake Quiz</button>
+            <button class="btn-navy" onclick="showScreen('browse')"><i class="fas fa-compass"></i> Explore All Clubs</button>
+          </div>
+        </div>
+        <div id="saved-tab" class="tab-panel">
+          <div id="saved-clubs-grid" class="clubs-grid"></div>
+          <div id="saved-empty" class="empty-state" style="display:none">
+            <i class="fas fa-heart"></i>
+            <h3>No saved clubs yet</h3>
+            <p>Tap the heart icon on any club card to save it here</p>
+            <button class="btn-navy" onclick="showScreen('browse')">Explore Clubs</button>
+          </div>
+        </div>
+        <div id="calendar-tab" class="tab-panel">
+          <div class="calendar-card">
+            <div class="calendar-nav">
+              <button id="prev-month" class="btn-icon-nav"><i class="fas fa-chevron-left"></i></button>
+              <h3 id="current-month"></h3>
+              <button id="next-month" class="btn-icon-nav"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div id="calendar-grid" class="calendar-grid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         BROWSE SCREEN
+    ═══════════════════════════════════════ -->
+    <div id="browse" class="screen">
+      <div class="container">
+        <div class="page-header">
+          <div>
+            <h2>Explore All Clubs</h2>
+            <p class="page-sub">Browse all <span id="club-count">83</span> clubs across IPSD 204</p>
+          </div>
+        </div>
+        <div class="browse-controls">
+          <div class="search-box">
+            <i class="fas fa-search search-ico"></i>
+            <input type="text" id="search-clubs" placeholder="Search by name, tag, or description…">
+            <button class="search-clear-btn" id="search-clear" onclick="clearSearch()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="filter-chips" id="filter-chips">
+            <button class="filter-chip active" data-tag="" onclick="setTagFilter(this,'')">All</button>
+            <button class="filter-chip" data-tag="STEM & Science" onclick="setTagFilter(this,'STEM & Science')"><i class="fas fa-flask"></i> STEM</button>
+            <button class="filter-chip" data-tag="Arts & Creativity" onclick="setTagFilter(this,'Arts & Creativity')"><i class="fas fa-palette"></i> Arts</button>
+            <button class="filter-chip" data-tag="Sports & Fitness" onclick="setTagFilter(this,'Sports & Fitness')"><i class="fas fa-running"></i> Sports</button>
+            <button class="filter-chip" data-tag="Music & Performance" onclick="setTagFilter(this,'Music & Performance')"><i class="fas fa-music"></i> Music</button>
+            <button class="filter-chip" data-tag="Leadership & Service" onclick="setTagFilter(this,'Leadership & Service')"><i class="fas fa-star"></i> Leadership</button>
+            <button class="filter-chip" data-tag="Business & Finance" onclick="setTagFilter(this,'Business & Finance')"><i class="fas fa-chart-line"></i> Business</button>
+            <button class="filter-chip" data-tag="Languages & Culture" onclick="setTagFilter(this,'Languages & Culture')"><i class="fas fa-globe"></i> Culture</button>
+            <button class="filter-chip" data-tag="Debate & Public Speaking" onclick="setTagFilter(this,'Debate & Public Speaking')"><i class="fas fa-microphone"></i> Debate</button>
+            <button class="filter-chip" data-tag="Health & Wellness" onclick="setTagFilter(this,'Health & Wellness')"><i class="fas fa-heartbeat"></i> Wellness</button>
+            <button class="filter-chip" data-tag="Environment & Nature" onclick="setTagFilter(this,'Environment & Nature')"><i class="fas fa-leaf"></i> Environment</button>
+            <button class="filter-chip" data-tag="Games & Technology" onclick="setTagFilter(this,'Games & Technology')"><i class="fas fa-gamepad"></i> Games &amp; Tech</button>
+          </div>
+        </div>
+        <div id="browse-info" class="browse-info"></div>
+        <div id="all-clubs" class="clubs-grid"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         CALENDAR PAGE SCREEN
+    ═══════════════════════════════════════ -->
+    <div id="calendar-page" class="screen">
+      <div class="container">
+        <div class="page-header" style="margin-bottom:8px">
+          <div>
+            <h2>Activity Calendar</h2>
+            <p class="page-sub">Club meetings and events across IPSD 204</p>
+          </div>
+        </div>
+
+        <!-- School selector tiles -->
+        <div class="cal-school-selector" id="cal-school-selector">
+          <button class="cal-school-tile active" data-school="neuqua" onclick="selectCalSchool(this,'neuqua')">
+            <div class="cal-school-logo-wrap"><img src="nv-logo.png" alt="NV" class="cal-school-logo"></div>
+            <div class="cal-school-info">
+              <span class="cal-school-name">Neuqua Valley</span>
+              <span class="cal-school-sub">Wildcat</span>
+            </div>
+          </button>
+          <button class="cal-school-tile" data-school="metea" onclick="selectCalSchool(this,'metea')">
+            <div class="cal-school-logo-wrap"><img src="metea-logo.png" alt="Metea" class="cal-school-logo"></div>
+            <div class="cal-school-info">
+              <span class="cal-school-name">Metea Valley</span>
+              <span class="cal-school-sub">Mustang</span>
+            </div>
+          </button>
+          <button class="cal-school-tile" data-school="waubonsie" onclick="selectCalSchool(this,'waubonsie')">
+            <div class="cal-school-logo-wrap"><img src="waubonsie-logo.png" alt="WV" class="cal-school-logo"></div>
+            <div class="cal-school-info">
+              <span class="cal-school-name">Waubonsie Valley</span>
+              <span class="cal-school-sub">Warrior</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Calendar card -->
+        <div class="cal-card">
+          <div class="cal-nav-row">
+            <button class="btn-icon-nav" onclick="changeCalPageMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+            <h3 id="cal-page-month"></h3>
+            <button class="btn-icon-nav" onclick="changeCalPageMonth(1)"><i class="fas fa-chevron-right"></i></button>
+          </div>
+          <div id="cal-page-grid" class="calendar-grid"></div>
+        </div>
+
+        <!-- Upcoming events list -->
+        <div class="cal-events-panel">
+          <div class="cal-events-header">
+            <h4>Upcoming Events — <span id="cal-school-label">Neuqua Valley</span></h4>
+          </div>
+          <div id="cal-events-list" class="cal-events-list"></div>
+          <div class="cal-placeholder-note">
+            <i class="fas fa-info-circle"></i>
+            Event data is a placeholder. Real club schedule data coming soon.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- #app -->
+
+  <!-- ═══ CLUB DETAIL MODAL ═══ -->
+  <div id="club-detail-modal" class="modal-overlay">
+    <div class="modal-sheet" id="club-modal-sheet" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <button class="modal-x" onclick="closeClubModal()"><i class="fas fa-times"></i></button>
+      <div id="club-detail-inner"></div>
+    </div>
+  </div>
+
+  <!-- ═══ MESSAGE MODAL ═══ -->
+  <div id="message-modal" class="modal-overlay modal-center">
+    <div class="modal-sheet modal-sm" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <button class="modal-x" onclick="closeMessageModal()"><i class="fas fa-times"></i></button>
+      <div class="msg-body">
+        <div class="msg-icon"><i class="fas fa-envelope-open-text"></i></div>
+        <h3>Contact Club Leader</h3>
+        <div class="contact-card">
+          <div class="contact-name" id="leader-name"></div>
+          <div class="contact-email" id="leader-email"></div>
+        </div>
+        <p class="contact-tip">We'll open your email app with a message ready to send.</p>
+        <div class="msg-actions">
+          <button class="btn-navy btn-full" onclick="sendEmail()"><i class="fas fa-paper-plane"></i> Open Email App</button>
+          <button class="btn-secondary btn-full" id="modal-ok" onclick="closeMessageModal()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

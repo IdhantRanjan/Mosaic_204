@@ -1,0 +1,15 @@
+{
+  "name": "neuqua-algo",
+  "version": "1.0.0",
+  "description": "Find Your Belonging - Neuqua Valley",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
+
+
