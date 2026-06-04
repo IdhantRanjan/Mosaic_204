@@ -33,6 +33,21 @@
       <div class="nav-right">
         <button class="nav-cta" id="nav-cta" onclick="startQuiz()">Get Started <i class="fas fa-arrow-right"></i></button>
       </div>
+
+      <!-- Mobile hamburger -->
+      <button class="nav-burger" id="nav-burger" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile dropdown menu -->
+    <div class="nav-mobile-menu" id="nav-mobile-menu">
+      <button onclick="navMobile(()=>showScreen('about'))">About</button>
+      <button onclick="navMobile(()=>showScreen('browse'))">Explore Clubs</button>
+      <button onclick="navMobile(()=>showScreen('calendar-page'))">Calendar</button>
+      <button onclick="navMobile(()=>scrollToSection('mission'))">Discover</button>
+      <button class="nav-mobile-dash hidden" id="nav-mobile-dash" onclick="navMobile(()=>showScreen('dashboard'))">Dashboard</button>
+      <button class="nav-mobile-cta" onclick="navMobile(startQuiz)">Get Started</button>
     </div>
   </nav>
 

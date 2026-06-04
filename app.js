@@ -142,9 +142,32 @@ function updateNav() {
 }
 
 // ═══════════════════════════════════════════
+// MOBILE NAV MENU
+// ═══════════════════════════════════════════
+function toggleMobileMenu() {
+  const menu   = document.getElementById('nav-mobile-menu');
+  const burger = document.getElementById('nav-burger');
+  if (!menu) return;
+  const open = menu.classList.toggle('open');
+  if (burger) burger.classList.toggle('open', open);
+}
+
+function closeMobileMenu() {
+  document.getElementById('nav-mobile-menu')?.classList.remove('open');
+  document.getElementById('nav-burger')?.classList.remove('open');
+}
+
+// Run a nav action then close the mobile menu
+function navMobile(fn) {
+  closeMobileMenu();
+  if (typeof fn === 'function') fn();
+}
+
+// ═══════════════════════════════════════════
 // SCREEN MANAGEMENT
 // ═══════════════════════════════════════════
 function showScreen(name) {
+  closeMobileMenu();
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const el = document.getElementById(name);
   if (el) { el.classList.add('active'); window.scrollTo(0,0); }
@@ -153,6 +176,8 @@ function showScreen(name) {
   const nav = document.getElementById('main-nav');
   const navCta = document.getElementById('nav-cta');
   const navDash = document.getElementById('nav-dashboard');
+  const navMobileDash = document.getElementById('nav-mobile-dash');
+  if (navMobileDash) navMobileDash.classList.toggle('hidden', matchedClubs.length === 0);
 
   if (name === 'home') {
     nav.classList.remove('solid');

@@ -205,6 +205,67 @@ h1,h2,h3,h4{letter-spacing:-0.02em;font-weight:700;line-height:1.2}
 .nav.scrolled .nav-cta,.nav.solid .nav-cta{background:var(--navy);color:white;border-color:var(--navy)}
 .nav.scrolled .nav-cta:hover,.nav.solid .nav-cta:hover{background:var(--navy-2)}
 
+/* Mobile hamburger button */
+.nav-burger{
+  display:none;
+  position:absolute;
+  z-index:3;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:38px;height:38px;
+  border-radius:50%;
+  align-items:center;justify-content:center;flex-direction:column;
+  gap:4px;
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.22);
+  transition:background 0.2s var(--ease);
+}
+.nav-burger span{
+  display:block;width:17px;height:2px;border-radius:2px;
+  background:rgba(255,255,255,0.92);
+  transition:transform 0.25s var(--ease), opacity 0.2s var(--ease);
+}
+.nav.scrolled .nav-burger,.nav.solid .nav-burger{background:var(--bg);border-color:var(--border)}
+.nav.scrolled .nav-burger span,.nav.solid .nav-burger span{background:var(--ink)}
+.nav-burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* Mobile dropdown menu */
+.nav-mobile-menu{
+  position:absolute;
+  z-index:3;
+  top:calc(100% + 10px);
+  left:0;right:0;
+  background:rgba(255,255,255,0.98);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(0,0,0,0.06);
+  border-radius:22px;
+  box-shadow:0 18px 48px rgba(0,0,0,0.28);
+  padding:8px;
+  display:flex;flex-direction:column;gap:2px;
+  opacity:0;transform:translateY(-10px) scale(0.98);
+  pointer-events:none;
+  transition:opacity 0.22s var(--ease), transform 0.22s var(--ease);
+}
+.nav-mobile-menu.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.nav-mobile-menu button{
+  text-align:left;
+  font-size:0.95rem;font-weight:500;color:var(--ink-2);
+  padding:13px 16px;border-radius:13px;
+  background:none;border:none;width:100%;
+  transition:background 0.15s;
+}
+.nav-mobile-menu button:hover,.nav-mobile-menu button:active{background:var(--bg);color:var(--ink)}
+.nav-mobile-cta{
+  background:var(--navy)!important;color:#fff!important;
+  font-weight:700!important;text-align:center!important;
+  margin-top:6px;
+}
+.nav-mobile-cta:hover{background:var(--navy-2)!important}
+
 /* ─────────────────────────────────────────────
    HERO — text vertically centered, no school pills
 ───────────────────────────────────────────── */
@@ -745,38 +806,96 @@ h1,h2,h3,h4{letter-spacing:-0.02em;font-weight:700;line-height:1.2}
 /* ─────────────────────────────────────────────
    RESPONSIVE
 ───────────────────────────────────────────── */
+/* ── Tablet ── */
 @media(max-width:900px){
-  .mission-layout{grid-template-columns:1fr;gap:48px}
+  .mission-layout{grid-template-columns:1fr;gap:44px}
   .advisory-layout{grid-template-columns:1fr;gap:40px}
   .about-mission-grid{grid-template-columns:1fr;gap:40px}
-  .about-dev-card{grid-template-columns:1fr;gap:24px}
+  .about-dev-card{grid-template-columns:1fr;gap:24px;justify-items:center;text-align:center}
+  .about-dev-role{display:block}
+  .about-dev-school-tag{margin-left:auto;margin-right:auto}
   .cta-grid{grid-template-columns:1fr}
   .cta-card{aspect-ratio:auto}
-  .cal-school-selector{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .mission-section,.advisory-section,.cta-section,.about-section{padding:72px 0}
+  .upcoming-section{padding:64px 0}
 }
+
+/* ── Mobile: nav switches to hamburger ── */
 @media(max-width:768px){
-  .hero-h1{font-size:2.6rem}
-  .mission-heading{font-size:2.5rem}
-  .stats-inner{gap:0;flex-wrap:wrap}
-  .stat-item{padding:16px 24px}
+  .nav{width:calc(100% - 24px);max-width:none}
+  .nav-container{justify-content:flex-start;padding:0 16px}
+  .nav-links{display:none}
+  .nav-right{display:none}
+  .nav-burger{display:flex}
+
+  .hero{padding:0 20px 110px;min-height:92vh}
+  .hero-h1{font-size:clamp(2.4rem,11vw,3.2rem);line-height:1.06}
+  .hero-sub{font-size:0.95rem;max-width:90%}
+  .mission-heading{font-size:clamp(2.2rem,9vw,2.75rem)}
+  .mw-key{font-size:1.75rem}
+  .mw-rest{font-size:0.9rem;margin-left:8px}
+
+  .stats-inner{flex-wrap:wrap;gap:0;padding:28px 0}
+  .stat-item{padding:14px 0;flex:0 0 50%}
   .stat-sep{display:none}
+  .stat-num{font-size:1.9rem}
+
+  .schools-band{padding:40px 0 44px}
+  .schools-band-label{margin-bottom:28px}
+  .marquee-item img{height:42px}
+
+  .section-title{font-size:clamp(1.5rem,6.5vw,2rem)}
+  .section-head{flex-direction:column;align-items:flex-start;gap:8px}
+
   .clubs-grid{grid-template-columns:1fr}
-  .options-grid{grid-template-columns:1fr 1fr}
-  .nav{width:calc(100% - 20px)}
-  .nav-links .nav-link:not(.nav-link-dashboard){display:none}
+  .options-grid{grid-template-columns:1fr}
+
   .tab-bar{width:100%}
-  .tab-btn{flex:1;justify-content:center;font-size:0.8125rem;padding:7px 8px}
-  .footer-grid{grid-template-columns:1fr}
+  .tab-btn{flex:1;justify-content:center;font-size:0.8125rem;padding:8px 6px}
+
+  .footer-grid{grid-template-columns:1fr;gap:28px}
   .modal-sheet{padding:16px 18px 32px}
   .about-values-grid{grid-template-columns:1fr}
+
+  /* Calendar: horizontal scroll so 7 columns stay readable */
+  .cal-card,.calendar-card{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .calendar-grid{min-width:560px}
+  .cal-school-selector{grid-template-columns:1fr;gap:10px}
+  .cal-school-tile{padding:14px 16px}
+
+  /* Survey */
+  .survey-card{padding:24px 20px}
+  .survey-wrapper{padding:90px 18px 48px}
+
+  /* About */
+  .about-hero-h1{font-size:clamp(2rem,9vw,2.75rem)}
+  .about-dev-photo{width:150px;height:188px}
+  .about-school-credits{gap:24px}
+
+  .mission-section,.advisory-section,.cta-section,.about-section{padding:60px 0}
 }
+
+/* ── Small phones ── */
 @media(max-width:480px){
-  .options-grid{grid-template-columns:1fr}
-  .hero-ctas{flex-direction:column;align-items:center}
-  .hero-sub{font-size:0.9375rem}
+  .container{padding:0 18px}
+  .hero-ctas{flex-direction:column;align-items:stretch}
+  .hero-ctas button{width:100%;justify-content:center}
   .results-actions{flex-direction:column}
+  .results-actions button{width:100%;justify-content:center}
   .dash-actions{flex-direction:column}
-  .advisory-stats{gap:24px}
-  .about-school-credits{gap:20px}
+  .dash-actions button{width:100%;justify-content:center}
+  .advisory-stats{gap:28px}
+  .stat-num{font-size:1.65rem}
+  .stat-lbl{font-size:0.75rem}
+  .cta-card-inner{padding:30px 24px}
+  .cta-number{font-size:3.2rem}
+  .cta-card h3,.cta-card-content h3{font-size:1.3rem}
+  .upcoming-row{padding:16px 18px;gap:14px}
+  .upcoming-tag{display:none}
+  .filter-chips{gap:5px}
+  .filter-chip{font-size:0.75rem;padding:5px 10px}
+  .page-header h2{font-size:1.5rem}
+  .about-school-credits{flex-direction:column;align-items:flex-start;gap:18px}
+  .cal-events-list .cal-event-tag{display:none}
 }
