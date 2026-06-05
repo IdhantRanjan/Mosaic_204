@@ -823,17 +823,17 @@ function matchRing(pct) {
   const r    = 19;
   const circ = 2 * Math.PI * r;
   const off  = circ * (1 - pct / 100);
-  const col  = pct >= 80 ? '#059669' : pct >= 60 ? '#1E3A5F' : pct >= 40 ? '#D97706' : '#9CA3AF';
+  const col  = '#0081c0'; /* single Hudson Blue accent */
   return `<svg class="match-ring" width="50" height="50" viewBox="0 0 50 50">
-    <circle cx="25" cy="25" r="${r}" fill="none" stroke="#F3F4F6" stroke-width="4"/>
+    <circle cx="25" cy="25" r="${r}" fill="none" stroke="#dee2de" stroke-width="4"/>
     <circle cx="25" cy="25" r="${r}" fill="none" stroke="${col}" stroke-width="4"
             stroke-linecap="round"
             stroke-dasharray="${circ.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"
             transform="rotate(-90 25 25)"/>
-    <text x="25" y="21" text-anchor="middle" font-family="Geist,system-ui,sans-serif"
-          font-size="9.5" font-weight="800" fill="#111827">${pct}%</text>
-    <text x="25" y="31" text-anchor="middle" font-family="Geist,system-ui,sans-serif"
-          font-size="6.5" font-weight="600" fill="#9CA3AF" letter-spacing="0.4">MATCH</text>
+    <text x="25" y="21" text-anchor="middle" font-family="'Source Serif 4',Georgia,serif"
+          font-size="10" font-weight="600" fill="#171717">${pct}%</text>
+    <text x="25" y="31" text-anchor="middle" font-family="Inter,system-ui,sans-serif"
+          font-size="6.5" font-weight="600" fill="#646464" letter-spacing="0.4">MATCH</text>
   </svg>`;
 }
 
