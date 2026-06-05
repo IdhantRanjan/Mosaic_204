@@ -26,7 +26,6 @@
         <button class="nav-link" onclick="showScreen('about')">About</button>
         <button class="nav-link" onclick="showScreen('browse')">Explore Clubs</button>
         <button class="nav-link" onclick="showScreen('calendar-page')">Calendar</button>
-        <button class="nav-link" onclick="scrollToSection('mission')">Discover</button>
         <button class="nav-link nav-link-dashboard hidden" id="nav-dashboard" onclick="showScreen('dashboard')">Dashboard</button>
       </div>
 
@@ -45,7 +44,6 @@
       <button onclick="navMobile(()=>showScreen('about'))">About</button>
       <button onclick="navMobile(()=>showScreen('browse'))">Explore Clubs</button>
       <button onclick="navMobile(()=>showScreen('calendar-page'))">Calendar</button>
-      <button onclick="navMobile(()=>scrollToSection('mission'))">Discover</button>
       <button class="nav-mobile-dash hidden" id="nav-mobile-dash" onclick="navMobile(()=>showScreen('dashboard'))">Dashboard</button>
       <button class="nav-mobile-cta" onclick="navMobile(startQuiz)">Get Started</button>
     </div>
@@ -72,7 +70,7 @@
             The one-stop platform for discovering clubs, events, and opportunities across IPSD 204.
           </p>
           <div class="hero-ctas">
-            <button class="btn-hero-primary" onclick="startQuiz()">Get Started <i class="fas fa-arrow-right"></i></button>
+            <button class="btn-hero-primary" onclick="                                   startQuiz()">Get Started <i class="fas fa-arrow-right"></i></button>
             <button class="btn-hero-ghost" onclick="showScreen('browse')">Explore Clubs</button>
           </div>
         </div>
@@ -90,7 +88,7 @@
         <div class="container">
           <div class="stats-inner">
             <div class="stat-item">
-              <span class="stat-num">500+</span>
+              <span class="stat-num">26000+</span>
               <span class="stat-lbl">Active Students</span>
             </div>
             <div class="stat-sep"></div>
@@ -160,7 +158,7 @@
               </div>
             </div>
             <div class="mission-right">
-              <p class="mission-body">At Mosaic, we're dedicated to helping students across IPSD 204 discover their passions, engage with their community, and develop leadership skills through meaningful club participation.</p>
+              <p class="mission-body">Through Mosaic, the Student Advisory Board is dedicated to helping students across IPSD 204 discover their passions, engage with their community, and develop leadership skills through meaningful club participation.</p>
               <button class="btn-outline" onclick="showScreen('about')">Learn about our mission <i class="fas fa-arrow-right"></i></button>
             </div>
           </div>
@@ -174,7 +172,7 @@
             <div class="advisory-text">
               <span class="section-label">The Team Behind It</span>
               <h2 class="section-title advisory-title">Brought to you by the<br>Student Advisory Board</h2>
-              <p class="advisory-body">Mosaic is student-built and student-driven. Our advisory board — made up of student leaders from across IPSD 204 — designed this platform to make it easier than ever for every student to find where they belong.</p>
+              <p class="advisory-body">Mosaic is student-built and student-driven. Our advisory board, made up of student leaders from across IPSD 204, designed this platform to make it easier than ever for every student to find where they belong.</p>
               <div class="advisory-stats">
                 <div class="advisory-stat">
                   <span class="advisory-stat-num">3</span>
@@ -255,7 +253,7 @@
             </div>
             <div class="footer-col">
               <h4>IPSD 204</h4>
-              <p class="footer-info">Naperville, IL 60563</p>
+              <p class="footer-info">Developed by Idhant Ranjan</p>
               <p class="footer-info">mosaic@ipsd204.org</p>
             </div>
           </div>
@@ -279,7 +277,7 @@
           <button class="back-link" onclick="showHome()"><i class="fas fa-arrow-left"></i> Back</button>
           <span class="section-label">About Mosaic</span>
           <h1 class="about-hero-h1">Built by students,<br>for students.</h1>
-          <p class="about-hero-sub">Mosaic is the district-wide club discovery platform for IPSD 204 — designed to make it easy for every student to find where they belong.</p>
+          <p class="about-hero-sub">Mosaic is the district-wide club discovery platform for IPSD 204: designed to make it easy for every student to find where they belong.</p>
         </div>
       </div>
 
@@ -290,7 +288,7 @@
             <div class="about-mission-text">
               <span class="section-label">Our Mission</span>
               <h2 class="section-title">We believe every student deserves to find their place.</h2>
-              <p class="about-body-text">High school is full of opportunities — clubs, activities, competitions, creative outlets, and communities waiting to be discovered. But too often, students don't know where to look or how to connect with what they love. Mosaic changes that.</p>
+              <p class="about-body-text">High school is full of opportunities: clubs, activities, competitions, creative outlets, and communities waiting to be discovered. But too often, students don't know where to look or how to connect with what they love. Mosaic changes that.</p>
               <p class="about-body-text">Our platform makes club discovery personal, simple, and district-wide. Whether you're passionate about robotics, want to join a service organization, or just want to try something new — Mosaic helps you find it in minutes.</p>
             </div>
             <div class="about-values-grid">
@@ -488,6 +486,39 @@
             <p class="page-sub">Browse all <span id="club-count">83</span> clubs across IPSD 204</p>
           </div>
         </div>
+
+        <!-- School selector — prominent super-tabs -->
+        <div class="browse-school-selector" id="browse-school-selector">
+          <button class="browse-school-tile active" data-school="all" onclick="selectBrowseSchool(this,'all')">
+            <div class="browse-school-logo-wrap bst-all-icon"><i class="fas fa-th-large"></i></div>
+            <div class="browse-school-info">
+              <span class="browse-school-name">All Schools</span>
+              <span class="browse-school-sub">IPSD 204</span>
+            </div>
+          </button>
+          <button class="browse-school-tile" data-school="neuqua" onclick="selectBrowseSchool(this,'neuqua')">
+            <div class="browse-school-logo-wrap"><img src="nv-logo.png" alt="NV" class="browse-school-logo"></div>
+            <div class="browse-school-info">
+              <span class="browse-school-name">Neuqua Valley</span>
+              <span class="browse-school-sub">Wildcat · <span id="bst-count-neuqua">—</span> clubs</span>
+            </div>
+          </button>
+          <button class="browse-school-tile" data-school="metea" onclick="selectBrowseSchool(this,'metea')">
+            <div class="browse-school-logo-wrap"><img src="metea-logo.png" alt="Metea" class="browse-school-logo"></div>
+            <div class="browse-school-info">
+              <span class="browse-school-name">Metea Valley</span>
+              <span class="browse-school-sub">Mustang · Coming soon</span>
+            </div>
+          </button>
+          <button class="browse-school-tile" data-school="waubonsie" onclick="selectBrowseSchool(this,'waubonsie')">
+            <div class="browse-school-logo-wrap"><img src="waubonsie-logo.png" alt="WV" class="browse-school-logo"></div>
+            <div class="browse-school-info">
+              <span class="browse-school-name">Waubonsie Valley</span>
+              <span class="browse-school-sub">Warrior · Coming soon</span>
+            </div>
+          </button>
+        </div>
+
         <div class="browse-controls">
           <div class="search-box">
             <i class="fas fa-search search-ico"></i>

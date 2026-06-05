@@ -90,6 +90,12 @@ const clubsData = [
   { "name": "Wind Ensemble", "category": "Special Interest", "tags": ["Music","Performance"], "description": "Elite wind instrument ensemble.", "meeting": "TBD", "leaders": ["Student Lead #1"] }
 ];
 
+// Stamp all existing entries as Neuqua Valley (future Metea/Waubonsie clubs will carry their own school property)
+clubsData.forEach(c => {
+  if (!c.school) c.school = 'neuqua';
+  if (!c.tags.includes('Neuqua')) c.tags.push('Neuqua');
+});
+
 // Survey Questions
 const surveyQuestions = [
   {

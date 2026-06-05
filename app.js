@@ -8,6 +8,7 @@ let matchedClubs     = [];
 let currentMonth     = new Date().getMonth();
 let currentYear      = new Date().getFullYear();
 let activeTagFilter  = '';
+let activeBrowseSchool = 'all';
 let searchTerm       = '';
 let selectedSchool   = 'neuqua';
 let savedClubs       = new Set(JSON.parse(localStorage.getItem('mosaic-saved') || '[]'));
@@ -732,7 +733,23 @@ function changeMonth(dir) {
 function loadBrowseClubs() {
   document.getElementById('club-count').textContent = clubsData.length;
   activeTagFilter = '';
+  activeBrowseSchool = 'all';
   searchTerm = '';
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.toggle('active', c.dataset.tag === ''));
+  document.querySelectorAll('.browse-school-tile').forEach(t => t.classList.toggle('active', t.dataset.school === 'all'));
+  document.getElementById('search-clubs').value = '';
+  // Update Neuqua club count badge
+  const nvCount = clubsData.filter(c => c.school === 'neuqua').length;
+  const nvEl = document.getElementById('bst-count-neuqua');
+  if (nvEl) nvEl.textContent = nvCount;
+  filterAndRender();
+}
+
+function selectBrowseSchool(btn, school) {
+  activeBrowseSchool = school;
+  activeTagFilter = '';
+  searchTerm = '';
+  document.querySelectorAll('.browse-school-tile').forEach(t => t.classList.toggle('active', t.dataset.school === school));
   document.querySelectorAll('.filter-chip').forEach(c => c.classList.toggle('active', c.dataset.tag === ''));
   document.getElementById('search-clubs').value = '';
   filterAndRender();
@@ -751,7 +768,29 @@ function clearSearch() {
 }
 
 function filterAndRender() {
+  const container = document.getElementById('all-clubs');
+  const info      = document.getElementById('browse-info');
+
+  // Coming-soon state for schools with no data yet
+  if (activeBrowseSchool === 'metea' || activeBrowseSchool === 'waubonsie') {
+    const school = activeBrowseSchool === 'metea' ? 'Metea Valley' : 'Waubonsie Valley';
+    const logo   = activeBrowseSchool === 'metea' ? 'metea-logo.png' : 'waubonsie-logo.png';
+    container.innerHTML = `
+      <div class="browse-coming-soon" style="grid-column:1/-1">
+        <img src="${logo}" alt="${school}" class="browse-coming-soon-logo">
+        <h3>${school} — Coming Soon</h3>
+        <p>We're working on adding clubs from ${school}. Check back soon!</p>
+      </div>`;
+    info.textContent = '';
+    return;
+  }
+
   let results = clubsData;
+
+  // Filter by school
+  if (activeBrowseSchool !== 'all') {
+    results = results.filter(club => club.school === activeBrowseSchool);
+  }
 
   if (activeTagFilter) {
     results = results.filter(club =>
@@ -769,10 +808,11 @@ function filterAndRender() {
     );
   }
 
-  const container = document.getElementById('all-clubs');
-  const info      = document.getElementById('browse-info');
   container.innerHTML = '';
-  info.textContent = results.length === clubsData.length
+  const base = activeBrowseSchool !== 'all'
+    ? clubsData.filter(c => c.school === activeBrowseSchool).length
+    : clubsData.length;
+  info.textContent = results.length === base
     ? `Showing all ${results.length} clubs`
     : `${results.length} club${results.length !== 1 ? 's' : ''} found`;
   results.forEach(club => container.appendChild(createClubCard(club, false)));
