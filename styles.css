@@ -92,95 +92,115 @@ button{font-family:var(--font);cursor:pointer;border:none;background:none;letter
 .hidden{display:none!important}
 
 #results.active,#dashboard.active,#browse.active,#about.active,#calendar-page.active{
-  padding-top:calc(var(--nav-h) + var(--nav-top) + 40px);
+  padding-top:calc(var(--nav-h) + 40px);
   min-height:100vh;
 }
 #results .container,#dashboard .container,#browse .container,#calendar-page .container{
   padding-bottom:96px;
 }
 
-/* ═══ FLOATING PILL NAV — dark island on light canvas ═══ */
+/* ═══ RECTANGULAR GLASSMORPHIC NAV — frosted cream bar ═══ */
 .nav{
   position:fixed;
-  top:var(--nav-top);
-  left:50%;
-  transform:translateX(-50%);
-  width:calc(100% - 40px);
-  max-width:880px;
+  top:0;left:0;right:0;
+  width:100%;
   height:var(--nav-h);
-  border-radius:var(--r-nav);
+  border-radius:0;
   z-index:100;
-  background:var(--graphite);
-  box-shadow:var(--sh-nav);
+  transform:none;
+  max-width:none;
+
+  /* Frosted glass on cream canvas */
+  background:rgba(254,255,252,0.72);
+  backdrop-filter:blur(24px) saturate(200%) brightness(1.02);
+  -webkit-backdrop-filter:blur(24px) saturate(200%) brightness(1.02);
+  border-bottom:1px solid rgba(222,226,222,0.9);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.6) inset,
+    0 4px 24px rgba(0,0,0,0.04);
+  transition:background 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
-/* nav stays dark in every state (no white-on-scroll) */
-.nav.scrolled,.nav.solid{background:var(--graphite);box-shadow:var(--sh-nav)}
+.nav.scrolled,.nav.solid{
+  background:rgba(254,255,252,0.88);
+  backdrop-filter:blur(28px) saturate(220%);
+  -webkit-backdrop-filter:blur(28px) saturate(220%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.7) inset,
+    0 6px 32px rgba(0,0,0,0.06);
+}
 
 .nav-container{
   position:relative;
   z-index:2;
   height:100%;
-  padding:0 10px 0 20px;
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:0 24px;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
-/* Logo crop (500×500 png, content box 229×71 @ offset 134,212) */
-.nav-logo{position:absolute;left:18px;display:flex;align-items:center;flex-shrink:0}
+/* Logo — dark on light canvas */
+.nav-logo{position:absolute;left:24px;display:flex;align-items:center;flex-shrink:0}
 .nav-logo-crop{width:96px;height:30px;overflow:hidden;position:relative}
 .nav-logo-img{
   position:absolute;width:210px;height:210px;left:-57px;top:-89px;
-  filter:brightness(0) invert(1);
+  filter:brightness(0);          /* ink-dark on cream */
+  transition:filter 0.2s var(--ease);
 }
-.nav.scrolled .nav-logo-img,.nav.solid .nav-logo-img{filter:brightness(0) invert(1)}
+.nav.scrolled .nav-logo-img,.nav.solid .nav-logo-img{filter:brightness(0)}
 
+/* Nav links — ink-dark */
 .nav-links{display:flex;align-items:center;gap:2px}
 .nav-link{
-  font-size:15px;font-weight:400;
+  font-size:15px;font-weight:400;letter-spacing:-0.011em;
   padding:7px 14px;border-radius:var(--r-btn);
-  color:rgba(255,255,255,0.78);
+  color:var(--steel);
   white-space:nowrap;background:none;border:none;transition:var(--t);
 }
-.nav-link:hover{color:#fff;background:rgba(255,255,255,0.08)}
-.nav.scrolled .nav-link,.nav.solid .nav-link{color:rgba(255,255,255,0.78)}
-.nav.scrolled .nav-link:hover,.nav.solid .nav-link:hover{color:#fff;background:rgba(255,255,255,0.08)}
+.nav-link:hover{color:var(--ink);background:rgba(0,0,0,0.04)}
+.nav.scrolled .nav-link,.nav.solid .nav-link{color:var(--steel)}
+.nav.scrolled .nav-link:hover,.nav.solid .nav-link:hover{color:var(--ink);background:rgba(0,0,0,0.04)}
 .nav-link-dashboard{font-weight:500}
 
-.nav-right{position:absolute;right:10px;flex-shrink:0}
-/* Pill-nav CTA — Obsidian, 4px radius (not full pill) */
+/* CTA — Obsidian on light glass */
+.nav-right{position:absolute;right:24px;flex-shrink:0}
 .nav-cta{
-  font-size:15px;font-weight:500;
+  font-size:15px;font-weight:500;letter-spacing:-0.011em;
   padding:8px 14px;border-radius:var(--r-btn);
   background:var(--obsidian);color:#fff;
-  border:1px solid rgba(255,255,255,0.14);
+  border:1px solid var(--obsidian);
   display:inline-flex;align-items:center;gap:7px;transition:var(--t);
 }
-.nav-cta:hover{background:#2a2a38}
-.nav.scrolled .nav-cta,.nav.solid .nav-cta{background:var(--obsidian);color:#fff;border-color:rgba(255,255,255,0.14)}
+.nav-cta:hover{background:#2a2a38;border-color:#2a2a38}
+.nav.scrolled .nav-cta,.nav.solid .nav-cta{background:var(--obsidian);color:#fff;border-color:var(--obsidian)}
 .nav.scrolled .nav-cta:hover,.nav.solid .nav-cta:hover{background:#2a2a38}
 
-/* Hamburger */
+/* Hamburger — ink on light */
 .nav-burger{
-  display:none;position:absolute;z-index:3;right:12px;top:50%;transform:translateY(-50%);
-  width:38px;height:38px;border-radius:50%;align-items:center;justify-content:center;flex-direction:column;gap:4px;
-  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);transition:var(--t);
+  display:none;position:absolute;z-index:3;right:18px;top:50%;transform:translateY(-50%);
+  width:38px;height:38px;border-radius:var(--r-btn);align-items:center;justify-content:center;flex-direction:column;gap:4px;
+  background:rgba(0,0,0,0.05);border:1px solid var(--sage);transition:var(--t);
 }
-.nav-burger span{display:block;width:17px;height:2px;border-radius:2px;background:#fff;transition:transform 0.25s var(--ease),opacity 0.2s var(--ease)}
-.nav.scrolled .nav-burger,.nav.solid .nav-burger{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.18)}
-.nav.scrolled .nav-burger span,.nav.solid .nav-burger span{background:#fff}
+.nav-burger span{display:block;width:17px;height:2px;border-radius:2px;background:var(--ink);transition:transform 0.25s var(--ease),opacity 0.2s var(--ease)}
+.nav.scrolled .nav-burger,.nav.solid .nav-burger{background:rgba(0,0,0,0.05);border-color:var(--sage)}
+.nav.scrolled .nav-burger span,.nav.solid .nav-burger span{background:var(--ink)}
 .nav-burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
 .nav-burger.open span:nth-child(2){opacity:0}
 .nav-burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 
+/* Mobile dropdown */
 .nav-mobile-menu{
-  position:absolute;z-index:3;top:calc(100% + 10px);left:0;right:0;
-  background:var(--paper);
+  position:absolute;z-index:3;top:calc(100% + 8px);left:18px;right:18px;
+  background:rgba(254,255,252,0.96);
+  backdrop-filter:blur(24px) saturate(200%);
+  -webkit-backdrop-filter:blur(24px) saturate(200%);
   border:1px solid var(--sage);
   border-radius:var(--r-elev);
   box-shadow:var(--sh-card);
   padding:8px;display:flex;flex-direction:column;gap:2px;
-  opacity:0;transform:translateY(-10px) scale(0.98);pointer-events:none;
+  opacity:0;transform:translateY(-8px) scale(0.98);pointer-events:none;
   transition:opacity 0.22s var(--ease),transform 0.22s var(--ease);
 }
 .nav-mobile-menu.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
@@ -197,7 +217,7 @@ button{font-family:var(--font);cursor:pointer;border:none;background:none;letter
   background:var(--cream);
   display:flex;align-items:center;
   min-height:88vh;
-  padding:calc(var(--nav-h) + var(--nav-top) + 72px) 0 96px;
+  padding:calc(var(--nav-h) + 72px) 0 96px;
   position:relative;overflow:hidden;
 }
 .hero-geo{display:none}        /* drop decorative shapes — editorial, not gradient */
@@ -388,7 +408,7 @@ button{font-family:var(--font);cursor:pointer;border:none;background:none;letter
 .footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding:20px 0;font-size:13px;color:rgba(255,255,255,0.35)}
 
 /* ═══ ABOUT ═══ */
-.about-hero-banner{background:var(--cream);padding:calc(var(--nav-h) + var(--nav-top) + 56px) 0 64px;border-bottom:1px solid var(--border)}
+.about-hero-banner{background:var(--cream);padding:calc(var(--nav-h) + 56px) 0 64px;border-bottom:1px solid var(--border)}
 .back-link{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;color:var(--steel);background:none;border:none;cursor:pointer;margin-bottom:28px;padding:0;transition:color 0.15s}
 .back-link:hover{color:var(--hudson-blue)}
 .about-hero-banner .section-label{display:block}
